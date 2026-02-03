@@ -2,11 +2,11 @@ import Lake
 open Lake DSL
 
 package math2001 where
-  moreServerArgs := #[
-    "-Dlinter.unusedVariables=false", -- ignores unused variables
-    "-DquotPrecheck=false",
-    "-DwarningAsError=false",
-    "-Dpp.unicode.fun=true"  -- pretty-prints `fun a ↦ b`
+  leanOptions := #[
+    ⟨`linter.unusedVariables, false⟩, -- ignores unused variables
+    ⟨`quotPrecheck, false⟩,
+    ⟨`warningAsError, false⟩,
+    ⟨`pp.unicode.fun, true⟩  -- pretty-prints `fun a ↦ b`
   ]
 
 lean_lib Library
@@ -14,11 +14,11 @@ lean_lib Library
 @[default_target]
 lean_lib Math2001 where
   globs := #[.submodules `Math2001]
-  moreLeanArgs := #[
-    "-Dlinter.unusedVariables=false", -- ignores unused variables
-    "-DquotPrecheck=false",
-    "-DwarningAsError=false",
-    "-Dpp.unicode.fun=true"  -- pretty-prints `fun a ↦ b`
+  leanOptions := #[
+    ⟨`linter.unusedVariables, false⟩, -- ignores unused variables
+    ⟨`quotPrecheck, false⟩,
+    ⟨`warningAsError, false⟩,
+    ⟨`pp.unicode.fun, true⟩  -- pretty-prints `fun a ↦ b`
   ]
 
 /-
