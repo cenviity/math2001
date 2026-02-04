@@ -36,7 +36,7 @@ example {x : ℝ} (hx : x ^ 2 - 3 * x + 2 = 0) : x = 1 ∨ x = 2 := by
   have h1 :=
     calc
     (x - 1) * (x - 2) = x ^ 2 - 3 * x + 2 := by ring
-    _ = 0 := by rw [hx]
+    _ = 0 := hx
   have h2 := eq_zero_or_eq_zero_of_mul_eq_zero h1
   sorry
 

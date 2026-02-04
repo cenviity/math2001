@@ -85,7 +85,7 @@ example {f : X → Y} : Bijective f ↔ ∀ y, ∃! x, f x = y := by
     · apply hx
     · intro x' hx'
       apply h_inj
-      calc f x' = y := by rw [hx']
+      calc f x' = y := hx'
         _ = f x := by rw [hx]
   · -- if `∀ y, ∃! x, f x = y` then `f` is bijective
     intro h
@@ -99,7 +99,7 @@ example {f : X → Y} : Bijective f ↔ ∀ y, ∃! x, f x = y := by
       have hxx2 : x2 = x
       · apply hx'
         rw [hx1x2]
-      calc x1 = x := by rw [hxx1]
+      calc x1 = x := hxx1
         _ = x2 := by rw [hxx2]
     · -- `f` is surjective
       intro y
