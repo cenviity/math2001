@@ -112,7 +112,7 @@ theorem lt_fmod_of_neg (n : ℤ) {d : ℤ} (hd : d < 0) : d < fmod n d := by
 def T (n : ℤ) : ℤ :=
   if 0 < n then
     T (1 - n) + 2 * n - 1
-  else if 0 < - n then
+  else if 0 < -n then
     T (-n)
   else
     0
