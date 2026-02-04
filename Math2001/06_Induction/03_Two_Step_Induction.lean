@@ -27,7 +27,7 @@ example (n : ℕ) : a n = 2 ^ n + (-1) ^ n := by
     a (k + 2)
       = a (k + 1) + 2 * a k := by rw [a]
     _ = (2 ^ (k + 1) + (-1) ^ (k + 1)) + 2 * (2 ^ k + (-1) ^ k) := by rw [IH1, IH2]
-    _ = (2 : ℤ) ^ (k + 2) + (-1) ^ (k + 2) := by ring
+    _ = 2 ^ (k + 2) + (-1) ^ (k + 2) := by ring
 
 
 example {m : ℕ} (hm : 1 ≤ m) : a m ≡ 1 [ZMOD 6] ∨ a m ≡ 5 [ZMOD 6] := by

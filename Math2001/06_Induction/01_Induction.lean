@@ -39,22 +39,22 @@ example (n : ℕ) : 4 ^ n ≡ 1 [ZMOD 15] ∨ 4 ^ n ≡ 4 [ZMOD 15] := by
   · -- inductive step
     obtain hk | hk := IH
     · right
-      calc (4:ℤ) ^ (k + 1) = 4 * 4 ^ k := by ring
+      calc 4 ^ (k + 1) = 4 * 4 ^ k := by ring
         _ ≡ 4 * 1 [ZMOD 15] := by rel [hk]
         _ = 4 := by numbers
     · left
-      calc (4:ℤ) ^ (k + 1) = 4 * 4 ^ k := by ring
+      calc 4 ^ (k + 1) = 4 * 4 ^ k := by ring
         _ ≡ 4 * 4 [ZMOD 15] := by rel [hk]
         _ = 15 * 1 + 1 := by numbers
         _ ≡ 1 [ZMOD 15] := by extra
 
 
-example {n : ℕ} (hn : 2 ≤ n) : (3:ℤ) ^ n ≥ 2 ^ n + 5 := by
+example {n : ℕ} (hn : 2 ≤ n) : 3 ^ n ≥ 2 ^ n + 5 := by
   induction_from_starting_point n, hn with k hk IH
   · -- base case
     numbers
   · -- inductive step
-    calc (3:ℤ) ^ (k + 1) = 2 * 3 ^ k + 3 ^ k := by ring
+    calc 3 ^ (k + 1) = 2 * 3 ^ k + 3 ^ k := by ring
       _ ≥ 2 * (2 ^ k + 5) + 3 ^ k := by rel [IH]
       _ = 2 ^ (k + 1) + 5 + (5 + 3 ^ k) := by ring
       _ ≥ 2 ^ (k + 1) + 5 := by extra
@@ -90,7 +90,7 @@ example (n : ℕ) :
     4 ^ n ≡ 1 [ZMOD 7] ∨ 4 ^ n ≡ 2 [ZMOD 7] ∨ 4 ^ n ≡ 4 [ZMOD 7] := by
   sorry
 
-example : forall_sufficiently_large n : ℕ, (3:ℤ) ^ n ≥ 2 ^ n + 100 := by
+example : forall_sufficiently_large n : ℕ, 3 ^ n ≥ 2 ^ n + 100 := by
   dsimp
   sorry
 

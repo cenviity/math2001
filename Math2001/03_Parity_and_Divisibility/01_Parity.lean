@@ -6,13 +6,13 @@ math2001_init
 open Int
 
 
-example : Odd (7 : ℤ) := by
+example : Odd 7 := by
   dsimp [Odd]
   use 3
   numbers
 
 
-example : Odd (-3 : ℤ) := by
+example : Odd (-3) := by
   sorry
 
 example {n : ℤ} (hn : Odd n) : Odd (3 * n + 2) := by
@@ -61,10 +61,10 @@ example (n : ℤ) : Even (n ^ 2 + n + 4) := by
 /-! # Exercises -/
 
 
-example : Odd (-9 : ℤ) := by
+example : Odd (-9) := by
   sorry
 
-example : Even (26 : ℤ) := by
+example : Even 26 := by
   sorry
 
 example {m n : ℤ} (hm : Odd m) (hn : Even n) : Odd (n + m) := by

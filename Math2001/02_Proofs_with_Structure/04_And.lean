@@ -47,7 +47,7 @@ example {a b : ℝ} (h1 : a ^ 2 + b ^ 2 = 0) : a = 0 ∧ b = 0 := by
   · apply le_antisymm
     calc
       a ^ 2 ≤ a ^ 2 + b ^ 2 := by extra
-      _ = 0 := by rw [h1]
+      _ = 0 := h1
     extra
   sorry
 
