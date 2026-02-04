@@ -12,7 +12,7 @@
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
+
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
@@ -22,10 +22,10 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="9. Sets" href="09_Sets.html" />
-    <link rel="prev" title="7. Number theory" href="07_Number_Theory.html" /> 
+    <link rel="prev" title="7. Number theory" href="07_Number_Theory.html" />
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
@@ -138,7 +138,7 @@
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
+
   <section id="functions">
 <span id="id1"></span><h1><span class="section-number">8. </span>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">&#61633;</a></h1>
 <p>So far in the book, we have studied properties of numbers (whether a number is odd,
@@ -178,7 +178,7 @@ this type:</p>
 </pre></div>
 </div>
 <p>Another way to define a function is by a closed formula.  For example,
-&#8220;let <span class="math notranslate nohighlight">\(q:\mathbb{R}\to \mathbb{R}\)</span> be the function defined by, <span class="math notranslate nohighlight">\(q(x)=x+3\)</span>.&#8221;  In Lean we
+&#8220;let <span class="math notranslate nohighlight">\(q:\mathbb{R}\to \mathbb{R}\)</span> be the function defined by <span class="math notranslate nohighlight">\(q(x)=x+3\)</span>.&#8221;  In Lean we
 can write this as</p>
 <div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">def</span> <span class="n">q</span> <span class="o">(</span><span class="n">x</span> <span class="o">:</span> <span class="n">&#8477;</span><span class="o">)</span> <span class="o">:</span> <span class="n">&#8477;</span> <span class="o">:=</span> <span class="n">x</span> <span class="bp">+</span> <span class="mi">3</span>
 </pre></div>
@@ -220,7 +220,7 @@ introduced properties (like &#8220;odd&#8221; and &#8220;prime&#8221;) of number
 <div class="admonition-solution admonition">
 <p class="admonition-title">Solution</p>
 <p>Let <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span> be real numbers and suppose that <span class="math notranslate nohighlight">\(q(x_1)=q(x_2)\)</span>.  Then
-<span class="math notranslate nohighlight">\(x_1+1=x_2+1\)</span>, so <span class="math notranslate nohighlight">\(x_1=x_2\)</span>.</p>
+<span class="math notranslate nohighlight">\(x_1+3=x_2+3\)</span>, so <span class="math notranslate nohighlight">\(x_1=x_2\)</span>.</p>
 </div>
 <p>Here is this solution in Lean.  Note that after unfolding the definition &#8220;injective&#8221; using the
 command <code class="docutils literal notranslate"><span class="pre">dsimp</span> <span class="pre">[Injective]</span></code>, the goal state displays</p>
@@ -281,7 +281,7 @@ exists <span class="math notranslate nohighlight">\(x\)</span> of type <span cla
 <h3><span class="section-number">8.1.6. </span>Example<a class="headerlink" href="#id5" title="Permalink to this headline">&#61633;</a></h3>
 <div class="admonition-problem admonition">
 <p class="admonition-title">Problem</p>
-<p>Consider the function <span class="math notranslate nohighlight">\(s:\mathbb{Q}\to\mathbb{Q}\)</span> defined by, <span class="math notranslate nohighlight">\(s(a)=3a+2\)</span>. Show that
+<p>Consider the function <span class="math notranslate nohighlight">\(s:\mathbb{Q}\to\mathbb{Q}\)</span> defined by <span class="math notranslate nohighlight">\(s(a)=3a+2\)</span>. Show that
 <span class="math notranslate nohighlight">\(s\)</span> is surjective.</p>
 </div>
 <div class="admonition-solution admonition">
@@ -754,7 +754,7 @@ surjective, then the function <span class="math notranslate nohighlight">\(x \ma
 all real numbers <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> with <span class="math notranslate nohighlight">\(x&lt;y\)</span>, it is true that <span class="math notranslate nohighlight">\(f(x)&lt;f(y)\)</span>.
 Prove that <span class="math notranslate nohighlight">\(f\)</span> is injective.</p>
 <p>You may wish to use the lemma <code class="docutils literal notranslate"><span class="pre">lt_trichotomy</span></code></p>
-<div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">lemma</span> <span class="n">lt_trichotomy</span> <span class="o">(</span><span class="n">x</span> <span class="n">y</span> <span class="o">:</span> <span class="n">&#8474;</span><span class="o">)</span> <span class="o">:</span> <span class="n">x</span> <span class="bp">&lt;</span> <span class="n">y</span> <span class="bp">&#8744;</span> <span class="n">x</span> <span class="bp">=</span> <span class="n">y</span> <span class="bp">&#8744;</span> <span class="n">x</span> <span class="bp">&lt;</span> <span class="n">y</span> <span class="o">:=</span>
+<div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">lemma</span> <span class="n">lt_trichotomy</span> <span class="o">(</span><span class="n">x</span> <span class="n">y</span> <span class="o">:</span> <span class="n">&#8474;</span><span class="o">)</span> <span class="o">:</span> <span class="n">x</span> <span class="bp">&lt;</span> <span class="n">y</span> <span class="bp">&#8744;</span> <span class="n">x</span> <span class="bp">=</span> <span class="n">y</span> <span class="bp">&#8744;</span> <span class="n">y</span> <span class="bp">&lt;</span> <span class="n">x</span> <span class="o">:=</span>
 </pre></div>
 </div>
 <p>which gives a case division on the relative sizes of two real numbers.</p>
@@ -792,7 +792,7 @@ Prove that <span class="math notranslate nohighlight">\(f\)</span> is injective.
 <h3><span class="section-number">8.2.2. </span>Example<a class="headerlink" href="#id13" title="Permalink to this headline">&#61633;</a></h3>
 <div class="admonition-problem admonition">
 <p class="admonition-title">Problem</p>
-<p>Let <span class="math notranslate nohighlight">\(p:\mathbb{R}\to\mathbb{R}\)</span> be the function defined by, <span class="math notranslate nohighlight">\(p(x)=2x-5\)</span>.
+<p>Let <span class="math notranslate nohighlight">\(p:\mathbb{R}\to\mathbb{R}\)</span> be the function defined by <span class="math notranslate nohighlight">\(p(x)=2x-5\)</span>.
 Show that <span class="math notranslate nohighlight">\(p\)</span> is bijective.</p>
 </div>
 <div class="admonition-solution admonition">
@@ -832,7 +832,7 @@ Show that <span class="math notranslate nohighlight">\(p\)</span> is bijective.<
 <h3><span class="section-number">8.2.3. </span>Example<a class="headerlink" href="#id14" title="Permalink to this headline">&#61633;</a></h3>
 <div class="admonition-problem admonition">
 <p class="admonition-title">Problem</p>
-<p>Let <span class="math notranslate nohighlight">\(a:\mathbb{R}\to\mathbb{R}\)</span> be the function defined by, <span class="math notranslate nohighlight">\(a(t)=t^3-t\)</span>.
+<p>Let <span class="math notranslate nohighlight">\(a:\mathbb{R}\to\mathbb{R}\)</span> be the function defined by <span class="math notranslate nohighlight">\(a(t)=t^3-t\)</span>.
 Show that <span class="math notranslate nohighlight">\(a\)</span> is not bijective.</p>
 </div>
 <div class="admonition-solution admonition">
@@ -1130,9 +1130,9 @@ Lean, <code class="docutils literal notranslate"><span class="pre">g</span> <spa
 <span id="id21"></span><h3><span class="section-number">8.3.2. </span>Example<a class="headerlink" href="#ext" title="Permalink to this headline">&#61633;</a></h3>
 <div class="admonition-problem admonition">
 <p class="admonition-title">Problem</p>
-<p>Let <span class="math notranslate nohighlight">\(f:\mathbb{R}\to\mathbb{R}\)</span> be the function defined by, <span class="math notranslate nohighlight">\(f(a)=a+3\)</span>.
-Let <span class="math notranslate nohighlight">\(g:\mathbb{R}\to\mathbb{R}\)</span> be the function defined by, <span class="math notranslate nohighlight">\(g(b)=2b\)</span>.
-Let <span class="math notranslate nohighlight">\(h:\mathbb{R}\to\mathbb{R}\)</span> be the function defined by, <span class="math notranslate nohighlight">\(h(c)=2c+6\)</span>.</p>
+<p>Let <span class="math notranslate nohighlight">\(f:\mathbb{R}\to\mathbb{R}\)</span> be the function defined by <span class="math notranslate nohighlight">\(f(a)=a+3\)</span>.
+Let <span class="math notranslate nohighlight">\(g:\mathbb{R}\to\mathbb{R}\)</span> be the function defined by <span class="math notranslate nohighlight">\(g(b)=2b\)</span>.
+Let <span class="math notranslate nohighlight">\(h:\mathbb{R}\to\mathbb{R}\)</span> be the function defined by <span class="math notranslate nohighlight">\(h(c)=2c+6\)</span>.</p>
 <p>Show that <span class="math notranslate nohighlight">\(g \circ f = h\)</span>.</p>
 </div>
 <div class="admonition-solution admonition">
@@ -1184,7 +1184,7 @@ for &#8220;extensionality&#8221;.) Before we use it, the goal state is</p>
 <h3><span class="section-number">8.3.4. </span>Example<a class="headerlink" href="#id23" title="Permalink to this headline">&#61633;</a></h3>
 <div class="admonition-problem admonition">
 <p class="admonition-title">Problem</p>
-<p>Let <span class="math notranslate nohighlight">\(s:\mathbb{R}\to\mathbb{R}\)</span> be the function defined by, <span class="math notranslate nohighlight">\(s(x)=5-x\)</span>.</p>
+<p>Let <span class="math notranslate nohighlight">\(s:\mathbb{R}\to\mathbb{R}\)</span> be the function defined by <span class="math notranslate nohighlight">\(s(x)=5-x\)</span>.</p>
 <p>Show that <span class="math notranslate nohighlight">\(s \circ s = \operatorname{Id}_\mathbb{R}\)</span>.</p>
 </div>
 <div class="admonition-solution admonition">
@@ -1412,7 +1412,7 @@ to itself, so that <span class="math notranslate nohighlight">\(b \circ a=c\)</s
 </pre></div>
 </div>
 </li>
-<li><p>Consider the function <span class="math notranslate nohighlight">\(u:\mathbb{R}\to\mathbb{R}\)</span> defined by, <span class="math notranslate nohighlight">\(u(x)=5x+1\)</span>. Write
+<li><p>Consider the function <span class="math notranslate nohighlight">\(u:\mathbb{R}\to\mathbb{R}\)</span> defined by <span class="math notranslate nohighlight">\(u(x)=5x+1\)</span>. Write
 down a function <span class="math notranslate nohighlight">\(v:\mathbb{R}\to\mathbb{R}\)</span> which is inverse to <span class="math notranslate nohighlight">\(u\)</span>, and prove it.</p>
 <div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">def</span> <span class="n">u</span> <span class="o">(</span><span class="n">x</span> <span class="o">:</span> <span class="n">&#8477;</span><span class="o">)</span> <span class="o">:</span> <span class="n">&#8477;</span> <span class="o">:=</span> <span class="mi">5</span> <span class="bp">*</span> <span class="n">x</span> <span class="bp">+</span> <span class="mi">1</span>
 
@@ -1454,7 +1454,7 @@ to <span class="math notranslate nohighlight">\(f\)</span>.  Show that <span cla
 </div>
 </li>
 <li><p>Let <span class="math notranslate nohighlight">\(f : X \to Y\)</span> and <span class="math notranslate nohighlight">\(g_1, g_2 : Y \to X\)</span> be functions, with both <span class="math notranslate nohighlight">\(g_1\)</span> and
-<span class="math notranslate nohighlight">\(g_1\)</span> inverse to <span class="math notranslate nohighlight">\(f\)</span>.  Show that <span class="math notranslate nohighlight">\(g_1=g_2\)</span>.</p>
+<span class="math notranslate nohighlight">\(g_2\)</span> inverse to <span class="math notranslate nohighlight">\(f\)</span>.  Show that <span class="math notranslate nohighlight">\(g_1=g_2\)</span>.</p>
 <p>This problem says that if a function <span class="math notranslate nohighlight">\(f\)</span> has an inverse, then that inverse is unique.</p>
 <div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">example</span> <span class="o">{</span><span class="n">f</span> <span class="o">:</span> <span class="n">X</span> <span class="bp">&#8594;</span> <span class="n">Y</span><span class="o">}</span> <span class="o">{</span><span class="n">g1</span> <span class="n">g2</span> <span class="o">:</span> <span class="n">Y</span> <span class="bp">&#8594;</span> <span class="n">X</span><span class="o">}</span> <span class="o">(</span><span class="n">h1</span> <span class="o">:</span> <span class="n">Inverse</span> <span class="n">f</span> <span class="n">g1</span><span class="o">)</span> <span class="o">(</span><span class="n">h2</span> <span class="o">:</span> <span class="n">Inverse</span> <span class="n">f</span> <span class="n">g2</span><span class="o">)</span> <span class="o">:</span>
     <span class="n">g1</span> <span class="bp">=</span> <span class="n">g2</span> <span class="o">:=</span> <span class="kd">by</span>
@@ -1478,7 +1478,7 @@ to <span class="math notranslate nohighlight">\(f\)</span>.  Show that <span cla
 <span id="id32"></span><h3><span class="section-number">8.4.1. </span>Example<a class="headerlink" href="#obtain-product" title="Permalink to this headline">&#61633;</a></h3>
 <div class="admonition-problem admonition">
 <p class="admonition-title">Problem</p>
-<p>Consider the function <span class="math notranslate nohighlight">\(q:\mathbb{Z}\to\mathbb{Z}^2\)</span> defined by, <span class="math notranslate nohighlight">\(q(m)=(m + 1, 2 - m)\)</span>.
+<p>Consider the function <span class="math notranslate nohighlight">\(q:\mathbb{Z}\to\mathbb{Z}^2\)</span> defined by <span class="math notranslate nohighlight">\(q(m)=(m + 1, 2 - m)\)</span>.
 Show that <span class="math notranslate nohighlight">\(q\)</span> is</p>
 <ol class="arabic simple">
 <li><p>injective;</p></li>
@@ -1834,7 +1834,7 @@ of integers, <span class="math notranslate nohighlight">\(5m+10n\ne x\)</span>. 
 <h3><span class="section-number">8.4.8. </span>Example<a class="headerlink" href="#id39" title="Permalink to this headline">&#61633;</a></h3>
 <div class="admonition-problem admonition">
 <p class="admonition-title">Problem</p>
-<p>Consider the function <span class="math notranslate nohighlight">\(g:\mathbb{R}^2\to \mathbb{R}^2\)</span> defined by,
+<p>Consider the function <span class="math notranslate nohighlight">\(g:\mathbb{R}^2\to \mathbb{R}^2\)</span> defined by
 <span class="math notranslate nohighlight">\(g(x,y)=(y,x)\)</span>.  Show that <span class="math notranslate nohighlight">\(g\circ g=\operatorname{Id}_\mathbb{R}\)</span>.</p>
 </div>
 <div class="admonition-solution admonition">
@@ -2013,7 +2013,7 @@ Show that this function is surjective.</p>
 </pre></div>
 </div>
 </li>
-<li><p>Consider the function <span class="math notranslate nohighlight">\(h:\mathbb{R}^3\to \mathbb{R}^3\)</span> defined by,
+<li><p>Consider the function <span class="math notranslate nohighlight">\(h:\mathbb{R}^3\to \mathbb{R}^3\)</span> defined by
 <span class="math notranslate nohighlight">\(h(x,y,z)=(y,z,x)\)</span>.  Show that <span class="math notranslate nohighlight">\(h\circ h\circ h=\operatorname{Id}_\mathbb{R}\)</span>.</p>
 <div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">def</span> <span class="n">h</span> <span class="o">:</span> <span class="n">&#8477;</span> <span class="bp">&#215;</span> <span class="n">&#8477;</span> <span class="bp">&#215;</span> <span class="n">&#8477;</span> <span class="bp">&#8594;</span> <span class="n">&#8477;</span> <span class="bp">&#215;</span> <span class="n">&#8477;</span> <span class="bp">&#215;</span> <span class="n">&#8477;</span>
   <span class="bp">|</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">z</span><span class="o">)</span> <span class="bp">=&gt;</span> <span class="o">(</span><span class="n">y</span><span class="o">,</span> <span class="n">z</span><span class="o">,</span> <span class="n">x</span><span class="o">)</span>
@@ -2045,7 +2045,7 @@ Show that this function is surjective.</p>
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+
 
 </footer>
         </div>
@@ -2056,7 +2056,7 @@ Show that this function is surjective.</p>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
 
 </body>
 </html>
