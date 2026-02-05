@@ -56,11 +56,13 @@ example : ∃ a b c d : ℕ,
 
 example : ∃ t : ℚ, t ^ 2 = 1.69 := by
   sorry
+
 example : ∃ m n : ℤ, m ^ 2 + n ^ 2 = 85 := by
   sorry
 
 example : ∃ x : ℝ, x < 0 ∧ x ^ 2 < 1 := by
   sorry
+
 example : ∃ a b : ℕ, 2 ^ a = 5 * b + 1 := by
   sorry
 
