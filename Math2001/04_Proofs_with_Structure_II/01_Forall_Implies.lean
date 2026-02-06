@@ -20,7 +20,15 @@ example {n : ℕ} (hn : ∀ m, n ∣ m) : n = 1 := by
 
 
 example {a b : ℝ} (h : ∀ x, x ≥ a ∨ x ≤ b) : a ≤ b := by
-  sorry
+  obtain h1 | h2 := by apply h ((a + b) / 2)
+  · calc
+      b = 2 * ((a + b) / 2) - a := by ring
+      _ ≥ 2 * a - a := by rel [h1]
+      _ = a := by ring
+  · calc
+      a = 2 * ((a + b) / 2) - b := by ring
+      _ ≤ 2 * b - b := by rel [h2]
+      _ = b := by ring
 
 example {a b : ℝ} (ha1 : a ^ 2 ≤ 2) (hb1 : b ^ 2 ≤ 2) (ha2 : ∀ y, y ^ 2 ≤ 2 → y ≤ a)
     (hb2 : ∀ y, y ^ 2 ≤ 2 → y ≤ b) :
@@ -28,7 +36,8 @@ example {a b : ℝ} (ha1 : a ^ 2 ≤ 2) (hb1 : b ^ 2 ≤ 2) (ha2 : ∀ y, y ^ 2 
   apply le_antisymm
   · apply hb2
     apply ha1
-  · sorry
+  · apply ha2
+    apply hb1
 
 example : ∃ b : ℝ, ∀ x : ℝ, b ≤ x ^ 2 - 2 * x := by
   use -1
@@ -39,7 +48,15 @@ example : ∃ b : ℝ, ∀ x : ℝ, b ≤ x ^ 2 - 2 * x := by
 
 
 example : ∃ c : ℝ, ∀ x y, x ^ 2 + y ^ 2 ≤ 4 → x + y ≥ c := by
-  sorry
+  use -3
+  intro x y hxy
+  have h1 :=
+    calc (x + y) ^ 2
+      _ ≤ (x + y) ^ 2 + (x - y) ^ 2 := by extra
+      _ = 2 * (x ^ 2 + y ^ 2) := by ring
+      _ ≤ 2 * 4 := by rel [hxy]
+      _ ≤ 3 ^ 2 := by numbers
+  apply (abs_le_of_sq_le_sq' h1 (by numbers)).1
 
 example : forall_sufficiently_large n : ℤ, n ^ 3 ≥ 4 * n ^ 2 + 7 := by
   dsimp
@@ -78,19 +95,42 @@ example : ¬ Prime 6 := by
 
 
 example {a : ℚ} (h : ∀ b : ℚ, a ≥ -3 + 4 * b - b ^ 2) : a ≥ 1 :=
-  sorry
+  calc
+    a ≥ -3 + 4 * 2 - 2 ^ 2 := by apply h
+    _ = 1 := by numbers
 
 example {n : ℤ} (hn : ∀ m, 1 ≤ m → m ≤ 5 → m ∣ n) : 15 ∣ n := by
-  sorry
+  obtain ⟨a, ha⟩ := hn 3 (by numbers) (by numbers)
+  obtain ⟨b, hb⟩ := hn 5 (by numbers) (by numbers)
+  use 2 * b - a
+  calc
+    n = 6 * n - 5 * n := by ring
+    _ = 6 * (5 * b) - 5 * n := by rw [hb]
+    _ = 6 * (5 * b) - 5 * (3 * a) := by rw [ha]
+    _ = 15 * (2 * b - a) := by ring
 
 example : ∃ n : ℕ, ∀ m : ℕ, n ≤ m := by
-  sorry
+  use 0
+  apply zero_le
 
 example : ∃ a : ℝ, ∀ b : ℝ, ∃ c : ℝ, a + b < c := by
-  sorry
+  use -1
+  intro b
+  use b
+  have : -1 < 0 := by numbers
+  addarith [this]
 
 example : forall_sufficiently_large x : ℝ, x ^ 3 + 3 * x ≥ 7 * x ^ 2 + 12 := by
-  sorry
+  use 7
+  intro x hx
+  calc x ^ 3 + 3 * x
+    _ = x * x ^ 2 + 3 * x := by ring
+    _ ≥ 7 * x ^ 2 + 3 * 7 := by rel [hx]
+    _ = 7 * x ^ 2 + 12 + 9 := by ring
+    _ ≥ 7 * x ^ 2 + 12 := by extra
 
 example : ¬(Prime 45) := by
-  sorry
+  apply not_prime 5 9
+  · numbers
+  · numbers
+  · numbers
