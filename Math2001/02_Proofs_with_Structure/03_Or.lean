@@ -16,8 +16,7 @@ example {x y : ℝ} (h : x = 1 ∨ y = -1) : x * y + x = y + 1 := by
     _ = y + 1 := by rw [hy]
 
 example {n : ℕ} : n ^ 2 ≠ 2 := by
-  have hn := le_or_succ_le n 1
-  obtain hn | hn := hn
+  obtain hn | hn := le_or_succ_le n 1
   apply ne_of_lt
   calc
     n ^ 2 ≤ 1 ^ 2 := by rel [hn]

@@ -21,15 +21,13 @@ example {a : ℚ} : 3 * a + 1 ≤ 7 ↔ a ≤ 2 := by
 
 example {n : ℤ} : 8 ∣ 5 * n ↔ 8 ∣ n := by
   constructor
-  · intro hn
-    obtain ⟨a, ha⟩ := hn
+  · intro ⟨a, ha⟩
     use -3 * a + 2 * n
     calc
       n = -3 * (5 * n) + 16 * n := by ring
       _ = -3 * (8 * a) + 16 * n := by rw [ha]
       _ = 8 * (-3 * a + 2 * n) := by ring
-  · intro hn
-    obtain ⟨a, ha⟩ := hn
+  · intro ⟨a, ha⟩
     use 5 * a
     calc 5 * n = 5 * (8 * a) := by rw [ha]
       _ = 8 * (5 * a) := by ring
@@ -37,8 +35,7 @@ example {n : ℤ} : 8 ∣ 5 * n ↔ 8 ∣ n := by
 
 theorem odd_iff_modEq (n : ℤ) : Odd n ↔ n ≡ 1 [ZMOD 2] := by
   constructor
-  · intro h
-    obtain ⟨k, hk⟩ := h
+  · intro ⟨k, hk⟩
     dsimp [Int.ModEq]
     dsimp [(· ∣ ·)]
     use k
@@ -47,8 +44,7 @@ theorem odd_iff_modEq (n : ℤ) : Odd n ↔ n ≡ 1 [ZMOD 2] := by
 
 theorem even_iff_modEq (n : ℤ) : Even n ↔ n ≡ 0 [ZMOD 2] := by
   constructor
-  · intro h
-    obtain ⟨k, hk⟩ := h
+  · intro ⟨k, hk⟩
     dsimp [Int.ModEq]
     dsimp [(· ∣ ·)]
     use k

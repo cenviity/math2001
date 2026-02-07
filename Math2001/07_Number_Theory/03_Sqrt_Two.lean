@@ -18,11 +18,10 @@ math2001_init
 
 theorem irrat_aux (a b : ℕ) (hb : b ≠ 0) : a ^ 2 ≠ 2 * b ^ 2 := by
   intro hab
-  have H : Nat.Even a
+  obtain ⟨k, hk⟩ : Nat.Even a
   · apply Nat.even_of_pow_even (n := 2)
     use b ^ 2
     apply hab
-  obtain ⟨k, hk⟩ := H
   have hbk :=
     calc 2 * b ^ 2 = a ^ 2 := by rw [hab]
       _ = (2 * k) ^ 2 := by rw [hk]
@@ -50,10 +49,8 @@ example : ¬ ∃ a b : ℕ, b ≠ 0 ∧ a ^ 2 = 2 * b ^ 2 := by
 example : ¬ ∃ a b : ℤ, b ≠ 0 ∧ b ^ 2 = 2 * a ^ 2 := by
   intro h
   obtain ⟨a, b, hb, hab⟩ := h
-  have Ha : gcd a b ∣ a := gcd_dvd_left a b
-  have Hb : gcd a b ∣ b := gcd_dvd_right a b
-  obtain ⟨k, hk⟩ := Ha
-  obtain ⟨l, hl⟩ := Hb
+  obtain ⟨k, hk⟩ : gcd a b ∣ a := gcd_dvd_left a b
+  obtain ⟨l, hl⟩ : gcd a b ∣ b := gcd_dvd_right a b
   obtain ⟨x, y, h⟩ := bezout a b
   set d := gcd a b
   have key :=

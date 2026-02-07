@@ -14,8 +14,7 @@ example {a : ℚ} (h : ∃ b : ℚ, a = b ^ 2 + 1) : a > 0 := by
 
 example {t : ℝ} (h : ∃ a : ℝ, a * t < 0) : t ≠ 0 := by
   obtain ⟨x, hxt⟩ := h
-  have H := le_or_gt x 0
-  obtain hx | hx := H
+  obtain hx | hx := le_or_gt x 0
   · have hxt' : 0 < (-x) * t := by addarith [hxt]
     have hx' : 0 ≤ -x := by addarith [hx]
     cancel -x at hxt'

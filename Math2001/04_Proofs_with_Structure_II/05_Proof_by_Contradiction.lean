@@ -16,8 +16,7 @@ example : ¬ (∀ x : ℝ, x ^ 2 ≥ x) := by
 
 
 example : ¬ 3 ∣ 13 := by
-  intro H
-  obtain ⟨k, hk⟩ := H
+  intro ⟨k, hk⟩
   obtain h4 | h5 := le_or_succ_le k 4
   · have h :=
     calc 13 = 3 * k := hk
@@ -71,8 +70,7 @@ example {p : ℕ} (k l : ℕ) (hk1 : k ≠ 1) (hkp : k ≠ p) (hkl : p = k * l) 
   have hk : k ∣ p
   · use l
     apply hkl
-  intro h
-  obtain ⟨h2, hfact⟩ := h
+  intro ⟨h2, hfact⟩
   have : k = 1 ∨ k = p := hfact k hk
   obtain hk1' | hkp' := this
   · contradiction
@@ -80,8 +78,7 @@ example {p : ℕ} (k l : ℕ) (hk1 : k ≠ 1) (hkp : k ≠ p) (hkl : p = k * l) 
 
 
 example (a b : ℤ) (h : ∃ q, b * q < a ∧ a < b * (q + 1)) : ¬b ∣ a := by
-  intro H
-  obtain ⟨k, hk⟩ := H
+  intro ⟨k, hk⟩
   obtain ⟨q, hq₁, hq₂⟩ := h
   have hb :=
   calc 0 = a - a := by ring
@@ -100,8 +97,7 @@ example {p : ℕ} (hp : 2 ≤ p)  (T : ℕ) (hTp : p < T ^ 2)
   intro m hm1 hmp
   obtain hmT | hmT := lt_or_le m T
   · apply H m hm1 hmT
-  intro h_div
-  obtain ⟨l, hl⟩ := h_div
+  intro ⟨l, hl⟩
   have : l ∣ p
   · sorry
   have hl1 :=

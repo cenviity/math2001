@@ -65,16 +65,14 @@ theorem gcd_dvd (a b : ℤ) : gcd a b ∣ b ∧ gcd a b ∣ a := by
   rw [gcd]
   split_ifs with h1 h2 <;> push_neg at *
   · -- case `0 < b`
-    have IH : _ ∧ _ := gcd_dvd b (fmod a b) -- inductive hypothesis
-    obtain ⟨IH_right, IH_left⟩ := IH
+    obtain ⟨IH_right, IH_left⟩ : _ ∧ _ := gcd_dvd b (fmod a b) -- inductive hypothesis
     constructor
     · -- prove that `gcd a b ∣ b`
       sorry
     · -- prove that `gcd a b ∣ a`
       sorry
   · -- case `b < 0`
-    have IH : _ ∧ _ := gcd_dvd b (fmod a (-b)) -- inductive hypothesis
-    obtain ⟨IH_right, IH_left⟩ := IH
+    obtain ⟨IH_right, IH_left⟩ : _ ∧ _ := gcd_dvd b (fmod a (-b)) -- inductive hypothesis
     constructor
     · -- prove that `gcd a b ∣ b`
       sorry
@@ -118,10 +116,8 @@ theorem gcd_dvd_left (a b : ℤ) : gcd a b ∣ a := by
   rw [gcd]
   split_ifs with h1 h2 <;> push_neg at *
   · -- case `0 < b`
-    have IH1 := gcd_dvd_left b (fmod a b) -- inductive hypothesis
-    have IH2 := gcd_dvd_right b (fmod a b) -- inductive hypothesis
-    obtain ⟨k, hk⟩ := IH1
-    obtain ⟨l, hl⟩ := IH2
+    obtain ⟨k, hk⟩ := gcd_dvd_left b (fmod a b) -- inductive hypothesis
+    obtain ⟨l, hl⟩ := gcd_dvd_right b (fmod a b) -- inductive hypothesis
     have H : fmod a b + b * fdiv a b = a := fmod_add_fdiv a b
     set q := fdiv a b
     set r := fmod a b
@@ -130,10 +126,8 @@ theorem gcd_dvd_left (a b : ℤ) : gcd a b ∣ a := by
       _ = gcd b r * l + (gcd b r * k) * q := by rw [← hk, ← hl]
       _ = gcd b r * (l + k * q) := by ring
   · -- case `b < 0`
-    have IH1 := gcd_dvd_left b (fmod a (-b)) -- inductive hypothesis
-    have IH2 := gcd_dvd_right b (fmod a (-b)) -- inductive hypothesis
-    obtain ⟨k, hk⟩ := IH1
-    obtain ⟨l, hl⟩ := IH2
+    obtain ⟨k, hk⟩ := gcd_dvd_left b (fmod a (-b)) -- inductive hypothesis
+    obtain ⟨l, hl⟩ := gcd_dvd_right b (fmod a (-b)) -- inductive hypothesis
     have H := fmod_add_fdiv a (-b)
     set q := fdiv a (-b)
     set r := fmod a (-b)
