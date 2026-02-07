@@ -40,7 +40,9 @@ theorem odd_iff_modEq (n : ℤ) : Odd n ↔ n ≡ 1 [ZMOD 2] := by
     dsimp [(· ∣ ·)]
     use k
     addarith [hk]
-  · sorry
+  · intro ⟨k, hk⟩
+    use k
+    addarith [hk]
 
 theorem even_iff_modEq (n : ℤ) : Even n ↔ n ≡ 0 [ZMOD 2] := by
   constructor
@@ -49,27 +51,96 @@ theorem even_iff_modEq (n : ℤ) : Even n ↔ n ≡ 0 [ZMOD 2] := by
     dsimp [(· ∣ ·)]
     use k
     addarith [hk]
-  · sorry
+  · intro ⟨k, hk⟩
+    use k
+    addarith [hk]
 
 example {x : ℝ} : x ^ 2 + x - 6 = 0 ↔ x = -3 ∨ x = 2 := by
-  sorry
+  constructor
+  · intro hx
+    have h1 :=
+      calc (x + 3) * (x - 2)
+        _ = x ^ 2 + x - 6 := by ring
+        _ = 0 := hx
+    obtain h | h := eq_zero_or_eq_zero_of_mul_eq_zero h1
+    · left
+      addarith [h]
+    · right
+      addarith [h]
+  · intro hx
+    obtain h | h := hx
+    · calc x ^ 2 + x - 6
+        _ = (-3) ^ 2 + (-3) - 6 := by rw [h]
+        _ = 0 := by ring
+    · calc x ^ 2 + x - 6
+        _ = 2 ^ 2 + 2 - 6 := by rw [h]
+        _ = 0 := by ring
 
 example {a : ℤ} : a ^ 2 - 5 * a + 5 ≤ -1 ↔ a = 2 ∨ a = 3 := by
-  sorry
+  constructor
+  · intro ha
+    have h :=
+      calc (2 * a - 5) ^ 2
+        _ = 4 * (a ^ 2 - 5 * a + 5) + 5 := by ring
+        _ ≤ 4 * -1 + 5 := by rel [ha]
+        _ = 1 ^ 2 := by ring
+    obtain ⟨h1, h2⟩ := abs_le_of_sq_le_sq' h (by numbers)
+    have h1' :=
+      calc 2 * a
+        _ = 2 * a - 5 + 5 := by ring
+        _ ≥ -1 + 5 := by rel [h1]
+        _ = 2 * 2 := by numbers
+    cancel 2 at h1'
+    have h2' :=
+      calc 2 * a
+        _ = 2 * a - 5 + 5 := by ring
+        _ ≤ 1 + 5 := by rel [h2]
+        _ = 2 * 3 := by numbers
+    cancel 2 at h2'
+    interval_cases a
+    · left
+      numbers
+    · right
+      numbers
+  · intro ha
+    obtain h | h := ha
+    · calc a ^ 2 - 5 * a + 5
+        _ = 2 ^ 2 - 5 * 2 + 5 := by rw [h]
+        _ ≤ -1 := by numbers
+    · calc a ^ 2 - 5 * a + 5
+        _ = 3 ^ 2 - 5 * 3 + 5 := by rw [h]
+        _ ≤ -1 := by numbers
 
 example {n : ℤ} (hn : n ^ 2 - 10 * n + 24 = 0) : Even n := by
   have hn1 :=
-    calc (n - 4) * (n - 6) = n ^ 2 - 10 * n + 24 := by ring
+    calc (n - 4) * (n - 6)
+      _ = n ^ 2 - 10 * n + 24 := by ring
       _ = 0 := hn
-  have hn2 := eq_zero_or_eq_zero_of_mul_eq_zero hn1
-  sorry
+  obtain h | h := eq_zero_or_eq_zero_of_mul_eq_zero hn1
+  · use 2
+    calc
+      n = n - 4 + 4 := by ring
+      _ = 0 + 4 := by rw [h]
+  · use 3
+    calc
+      n = n - 6 + 6 := by ring
+      _ = 0 + 6 := by rw [h]
 
 example {n : ℤ} (hn : n ^ 2 - 10 * n + 24 = 0) : Even n := by
   have hn1 :=
-    calc (n - 4) * (n - 6) = n ^ 2 - 10 * n + 24 := by ring
+    calc (n - 4) * (n - 6)
+      _ = n ^ 2 - 10 * n + 24 := by ring
       _ = 0 := hn
   rw [mul_eq_zero] at hn1 -- `hn1 : n - 4 = 0 ∨ n - 6 = 0`
-  sorry
+  obtain h | h := hn1
+  · use 2
+    calc
+      n = n - 4 + 4 := by ring
+      _ = 0 + 4 := by rw [h]
+  · use 3
+    calc
+      n = n - 6 + 6 := by ring
+      _ = 0 + 6 := by rw [h]
 
 example {x y : ℤ} (hx : Odd x) (hy : Odd y) : Odd (x + y + 1) := by
   rw [Int.odd_iff_modEq] at *
@@ -83,22 +154,86 @@ example (n : ℤ) : Even n ∨ Odd n := by
   · left
     rw [Int.even_iff_modEq]
     apply hn
-  · sorry
+  · right
+    rw [Int.odd_iff_modEq]
+    apply hn
 
 /-! # Exercises -/
 
 
 example {x : ℝ} : 2 * x - 1 = 11 ↔ x = 6 := by
-  sorry
+  constructor
+  · intro hx
+    calc
+      x = (2 * x - 1 + 1) / 2 := by ring
+      _ = (11 + 1) / 2 := by rw [hx]
+      _ = 6 := by numbers
+  · intro hx
+    calc 2 * x - 1
+      _ = 2 * 6 - 1 := by rw [hx]
+      _ = 11 := by numbers
 
 example {n : ℤ} : 63 ∣ n ↔ 7 ∣ n ∧ 9 ∣ n := by
-  sorry
+  constructor
+  · intro ⟨k, hk⟩
+    constructor
+    · use 9 * k
+      calc
+        n = 63 * k := hk
+        _ = 7 * (9 * k) := by ring
+    · use 7 * k
+      calc
+        n = 63 * k := hk
+        _ = 9 * (7 * k) := by ring
+  · intro ⟨⟨x, hx⟩, ⟨y, hy⟩⟩
+    use 4 * y - 3 * x
+    calc
+      n = 28 * n - 27 * n := by ring
+      _ = 28 * (9 * y) - 27 * n := by rw [hy]
+      _ = 28 * (9 * y) - 27 * (7 * x) := by rw [hx]
+      _ = 63 * (4 * y - 3 * x) := by ring
 
 theorem dvd_iff_modEq {a n : ℤ} : n ∣ a ↔ a ≡ 0 [ZMOD n] := by
-  sorry
+  constructor
+  · intro ⟨k, hk⟩
+    use k
+    addarith [hk]
+  · intro ⟨k, hk⟩
+    use k
+    addarith [hk]
 
 example {a b : ℤ} (hab : a ∣ b) : a ∣ 2 * b ^ 3 - b ^ 2 + 3 * b := by
-  sorry
+  rw [dvd_iff_modEq] at *
+  calc 2 * b ^ 3 - b ^ 2 + 3 * b
+    _ ≡ 2 * 0 ^ 3 - 0 ^ 2 + 3 * 0 [ZMOD a] := by rel [hab]
+    _ = 0 := by numbers
+    _ ≡ 0 [ZMOD a] := by extra
 
 example {k : ℕ} : k ^ 2 ≤ 6 ↔ k = 0 ∨ k = 1 ∨ k = 2 := by
-  sorry
+  constructor
+  · intro hk
+    have hk' :=
+      calc k ^ 2
+        _ ≤ 6 := hk
+        _ < 3 ^ 2 := by numbers
+    cancel 2 at hk'
+    interval_cases k
+    · left
+      numbers
+    · right
+      left
+      numbers
+    · right
+      right
+      numbers
+  · intro hk
+    obtain h | h | h := hk
+    · calc k ^ 2
+        _ = 0 ^ 2 := by rw [h]
+        _ ≤ 6 := by numbers
+    · calc k ^ 2
+        _ = 1 ^ 2 := by rw [h]
+        _ ≤ 6 := by numbers
+    · calc k ^ 2
+        _ = 2 ^ 2 := by rw [h]
+        _ ≤ 6 := by numbers
