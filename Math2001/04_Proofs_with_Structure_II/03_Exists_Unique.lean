@@ -21,7 +21,25 @@ example : ∃! a : ℝ, 3 * a + 1 = 7 := by
 
 
 example : ∃! x : ℚ, ∀ a, a ≥ 1 → a ≤ 3 → (a - x) ^ 2 ≤ 1 := by
-  sorry
+  use 2
+  constructor
+  · intro a h1 h2
+    have h :=
+      calc (a - 2) ^ 2
+        _ ≤ 1 ^ 2 := sq_le_sq' (by addarith [h1]) (by addarith [h2])
+        _ = 1 := by numbers
+    apply h
+  · intro y hy
+    have h1 := hy 1 (by numbers) (by numbers)
+    have h2 := hy 3 (by numbers) (by numbers)
+    have h3 :=
+      calc (y - 2) ^ 2
+        _ = ((1 - y) ^ 2 + (3 - y) ^ 2 - 2) / 2 := by ring
+        _ ≤ (1 + 1 - 2) / 2 := by rel [h1, h2]
+        _ = 0 := by numbers
+    have h4 := le_antisymm h3 (by extra)
+    cancel 2 at h4
+    addarith [h4]
 
 example {x : ℚ} (hx : ∃! a : ℚ, a ^ 2 = x) : x = 0 := by
   obtain ⟨a, ha1, ha2⟩ := hx
@@ -70,10 +88,41 @@ example : ∃! r : ℤ, 0 ≤ r ∧ r < 5 ∧ 14 ≡ r [ZMOD 5] := by
 
 
 example : ∃! x : ℚ, 4 * x - 3 = 9 := by
-  sorry
+  use 3
+  constructor
+  · numbers
+  · intro y hy
+    calc
+      y = (4 * y - 3 + 3) / 4 := by ring
+      _ = (9 + 3) / 4 := by rw [hy]
+      _ = 3 := by numbers
 
 example : ∃! n : ℕ, ∀ a, n ≤ a := by
-  sorry
+  use 0
+  constructor
+  · apply zero_le
+  · intro y hy
+    apply le_antisymm (hy _) (zero_le _)
 
 example : ∃! r : ℤ, 0 ≤ r ∧ r < 3 ∧ 11 ≡ r [ZMOD 3] := by
-  sorry
+  use 2
+  constructor
+  · constructor
+    · numbers
+    · constructor
+      · numbers
+      · use 3
+        numbers
+  · intro r ⟨hr1, hr2, q, hr3⟩
+    have hq1 :=
+      calc 3 * 2
+        _ < 11 - r := by addarith [hr2]
+        _ = 3 * q := hr3
+    cancel 3 at hq1
+    have hq2 :=
+      calc 3 * 4
+        _ > 11 - r := by addarith [hr1]
+        _ = 3 * q := hr3
+    cancel 3 at hq2
+    interval_cases q
+    addarith [hr3]
