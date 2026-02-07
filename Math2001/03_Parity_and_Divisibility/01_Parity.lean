@@ -3,7 +3,7 @@ import Library.Basic
 
 math2001_init
 
-open Int
+namespace Int
 
 
 example : Odd 7 := by

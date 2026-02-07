@@ -4,7 +4,7 @@ import AutograderLib
 
 math2001_init
 
-open Nat
+namespace Nat
 
 /-! # Homework 3
 

@@ -5,7 +5,7 @@ import AutograderLib
 
 math2001_init
 
-open Int
+namespace Int
 
 /-! # Homework 4
 

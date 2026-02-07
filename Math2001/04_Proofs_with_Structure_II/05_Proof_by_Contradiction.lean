@@ -6,7 +6,7 @@ import Library.Tactic.ModEq
 
 math2001_init
 
-open Int
+namespace Int
 
 
 example : ¬ (∀ x : ℝ, x ^ 2 ≥ x) := by
@@ -36,22 +36,22 @@ example {x y : ℝ} (h : x + y = 0) : ¬(x > 0 ∧ y > 0) := by
 example : ¬ (∃ n : ℕ, n ^ 2 = 2) := by
   sorry
 
-example (n : ℤ) : Int.Even n ↔ ¬ Int.Odd n := by
+example (n : ℤ) : Even n ↔ ¬ Odd n := by
   constructor
   · intro h1 h2
-    rw [Int.even_iff_modEq] at h1
-    rw [Int.odd_iff_modEq] at h2
+    rw [even_iff_modEq] at h1
+    rw [odd_iff_modEq] at h2
     have h :=
     calc 0 ≡ n [ZMOD 2] := by rel [h1]
       _ ≡ 1 [ZMOD 2] := by rel [h2]
     numbers at h -- contradiction!
   · intro h
-    obtain h1 | h2 := Int.even_or_odd n
+    obtain h1 | h2 := even_or_odd n
     · apply h1
     · contradiction
 
 
-example (n : ℤ) : Int.Odd n ↔ ¬ Int.Even n := by
+example (n : ℤ) : Odd n ↔ ¬ Even n := by
   sorry
 
 example (n : ℤ) : ¬(n ^ 2 ≡ 2 [ZMOD 3]) := by
@@ -138,10 +138,10 @@ example : ¬ (∃ t : ℝ, t ≤ 4 ∧ t ≥ 5) := by
 example : ¬ (∃ a : ℝ, a ^ 2 ≤ 8 ∧ a ^ 3 ≥ 30) := by
   sorry
 
-example : ¬ Int.Even 7 := by
+example : ¬ Even 7 := by
   sorry
 
-example {n : ℤ} (hn : n + 3 = 7) : ¬ (Int.Even n ∧ n ^ 2 = 10) := by
+example {n : ℤ} (hn : n + 3 = 7) : ¬ (Even n ∧ n ^ 2 = 10) := by
   sorry
 
 example {x : ℝ} (hx : x ^ 2 < 9) : ¬ (x ≤ -3 ∨ x ≥ 3) := by
