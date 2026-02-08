@@ -41,7 +41,7 @@ example (n : ℕ) : 4 ^ n ≡ 1 [ZMOD 15] ∨ 4 ^ n ≡ 4 [ZMOD 15] := by
     · right
       calc 4 ^ (k + 1) = 4 * 4 ^ k := by ring
         _ ≡ 4 * 1 [ZMOD 15] := by rel [hk]
-        _ = 4 := by numbers
+        _ ≡ 4 [ZMOD 15] := by numbers
     · left
       calc 4 ^ (k + 1) = 4 * 4 ^ k := by ring
         _ ≡ 4 * 4 [ZMOD 15] := by rel [hk]
