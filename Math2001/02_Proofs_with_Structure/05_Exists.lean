@@ -18,8 +18,7 @@ example {t : ℝ} (h : ∃ a : ℝ, a * t < 0) : t ≠ 0 := by
   · have hxt' : 0 < (-x) * t := by addarith [hxt]
     have hx' : 0 ≤ -x := by addarith [hx]
     cancel -x at hxt'
-    apply ne_of_gt
-    apply hxt'
+    apply ne_of_gt hxt'
   · sorry
 
 example : ∃ n : ℤ, 12 * n = 84 := by
