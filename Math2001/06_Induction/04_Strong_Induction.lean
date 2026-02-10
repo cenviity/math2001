@@ -1,4 +1,5 @@
 /- Copyright (c) Heather Macbeth, 2023.  All rights reserved. -/
+-- import Mathlib.Data.Nat.Log
 import Mathlib.Tactic.GCongr
 import Library.Basic
 
@@ -54,4 +55,22 @@ theorem exists_prime_factor {n : ℕ} (hn2 : 2 ≤ n) : ∃ p : ℕ, Prime p ∧
 
 
 theorem extract_pow_two (n : ℕ) (hn : 0 < n) : ∃ a x, Odd x ∧ n = 2 ^ a * x := by
-  sorry
+  obtain ⟨p, hnp⟩ | h_odd := even_or_odd n
+  · have hp : 0 < p
+    · have h2p_pos :=
+        calc
+          0 < n := hn
+          _ = 2 * p := by rw [hnp]
+      cancel 2 at h2p_pos
+    obtain ⟨a, y, hy, hpay⟩ := extract_pow_two p hp
+    use (a + 1), y
+    constructor
+    · apply hy
+    · calc
+        n = 2 * p := hnp
+        _ = 2 * (2 ^ a * y) := by rw [hpay]
+        _ = 2 ^ (a + 1) * y := by ring
+  · use 0, n
+    constructor
+    · apply h_odd
+    · ring
