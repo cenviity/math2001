@@ -46,26 +46,26 @@ example : ¬ ∃ a b : ℕ, b ≠ 0 ∧ a ^ 2 = 2 * b ^ 2 := by
   contradiction
 
 
-example : ¬ ∃ a b : ℤ, b ≠ 0 ∧ b ^ 2 = 2 * a ^ 2 := by
+example : ¬ ∃ a b : ℤ, b ≠ 0 ∧ a ^ 2 = 2 * b ^ 2 := by
   intro h
   obtain ⟨a, b, hb, hab⟩ := h
-  obtain ⟨k, hk⟩ : gcd a b ∣ a := gcd_dvd_left a b
-  obtain ⟨l, hl⟩ : gcd a b ∣ b := gcd_dvd_right a b
-  obtain ⟨x, y, h⟩ := bezout a b
-  set d := gcd a b
+  obtain ⟨k, hk⟩ : gcd b a ∣ b := gcd_dvd_left b a
+  obtain ⟨l, hl⟩ : gcd b a ∣ a := gcd_dvd_right b a
+  obtain ⟨x, y, h⟩ := bezout b a
+  set d := gcd b a
   have key :=
   calc (2 * k * y + l * x) ^ 2 * d ^ 2
       = (2 * (d * k) * y + (d * l) * x) ^ 2 := by ring
-    _ = (2 * a * y + b * x) ^ 2 := by rw [hk, hl]
-    _ = 2 * (x * a + y * b) ^ 2 + (x ^ 2 - 2 * y ^ 2) * (b ^ 2 - 2 * a ^ 2) := by ring
-    _ = 2 * d ^ 2 + (x ^ 2 - 2 * y ^ 2) * (b ^ 2 - b ^ 2) := by rw [h, hab]
+    _ = (2 * b * y + a * x) ^ 2 := by rw [hk, hl]
+    _ = 2 * (x * b + y * a) ^ 2 + (x ^ 2 - 2 * y ^ 2) * (a ^ 2 - 2 * b ^ 2) := by ring
+    _ = 2 * d ^ 2 + (x ^ 2 - 2 * y ^ 2) * (a ^ 2 - a ^ 2) := by rw [h, hab]
     _ = 2 * d ^ 2 := by ring
   have hd : d ≠ 0
   · intro hd
     have :=
-    calc b = d * l := hl
-      _ = 0 * l := by rw [hd]
-      _ = 0 := by ring
+      calc b = d * k := hk
+        _ = 0 * k := by rw [hd]
+        _ = 0 := by ring
     contradiction
   cancel d ^ 2 at key
   have := sq_ne_two (2 * k * y + l * x)

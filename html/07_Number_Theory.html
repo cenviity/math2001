@@ -418,21 +418,21 @@ techniques from <a class="reference internal" href="#euclid-lemma"><span class="
 <p>Denote by <span class="math notranslate nohighlight">\(d\)</span> the greatest common divisor of <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span>.
 By <a class="reference internal" href="06_Induction.html#common-divisor"><span class="std std-numref">Example 6.7.3</span></a>, <span class="math notranslate nohighlight">\(d\mid a\)</span> and
 <span class="math notranslate nohighlight">\(d\mid b\)</span>.  Let <span class="math notranslate nohighlight">\(k\)</span> and <span class="math notranslate nohighlight">\(l\)</span> be integers such that
-<span class="math notranslate nohighlight">\(a=dk\)</span> and <span class="math notranslate nohighlight">\(b=dl\)</span>.</p>
+<span class="math notranslate nohighlight">\(b=dk\)</span> and <span class="math notranslate nohighlight">\(a=dl\)</span>.</p>
 <p>Also by <a class="reference internal" href="06_Induction.html#bezout-gcd"><span class="std std-numref">Example 6.7.6</span></a> (B&#233;zout&#8217;s identity) there exist integers <span class="math notranslate nohighlight">\(x\)</span> and
-<span class="math notranslate nohighlight">\(y\)</span> such that <span class="math notranslate nohighlight">\(xa+yb=d\)</span>.</p>
+<span class="math notranslate nohighlight">\(y\)</span> such that <span class="math notranslate nohighlight">\(xb+ya=d\)</span>.</p>
 <p>The key calculation is the following  (<span class="math notranslate nohighlight">\(\dagger\)</span>).:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}(2k y + lx) ^ 2 \cdot d^2
   &amp;= (2(dk) y + (d l) x) ^ 2 \\
-  &amp;= (2 a y + b x) ^ 2 \\
-  &amp;= 2  (x a + y b) ^ 2 + (x ^ 2 - 2  y ^ 2) (b ^ 2 - 2  a ^ 2) \\
-  &amp;= 2  d ^ 2 + (x ^ 2 - 2  y ^ 2)  (b ^ 2 - b ^ 2) \\
+  &amp;= (2 b y + a x) ^ 2 \\
+  &amp;= 2 (x b + y a) ^ 2 + (x ^ 2 - 2  y ^ 2) (a ^ 2 - 2 b ^ 2) \\
+  &amp;= 2 d ^ 2 + (x ^ 2 - 2  y ^ 2)  (a ^ 2 - a ^ 2) \\
   &amp;= 2 \cdot d^2 \\\end{split}\]</div>
 <p>We have that <span class="math notranslate nohighlight">\(d\ne 0\)</span>, since if not,</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}b &amp;=dl\\
-&amp;=0\cdot l\\
+\[\begin{split}b &amp;=dk\\
+&amp;=0\cdot k\\
 &amp;=0,\end{split}\]</div>
 <p>contradiction.  Hence by (<span class="math notranslate nohighlight">\(\dagger\)</span>),</p>
 <div class="math notranslate nohighlight">
