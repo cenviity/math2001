@@ -107,7 +107,21 @@ example (a b : ℤ) (h : 0 < b) : ∃ r : ℤ, 0 ≤ r ∧ r < b ∧ a ≡ r [ZM
 
 
 theorem lt_fmod_of_neg (n : ℤ) {d : ℤ} (hd : d < 0) : d < fmod n d := by
-  sorry
+  rw [fmod]
+  split_ifs with h1 h2 h3 <;> push_neg at *
+  · apply lt_fmod_of_neg (n + d) hd
+  · apply lt_fmod_of_neg (n - d) hd
+  · apply hd
+  · have hd' : 0 < -d := by addarith [hd]
+    have h4 :=
+      calc
+        0 ≤ - d * (n - d) := by addarith [h2]
+        _ = -d * (n - d) := by ring
+    cancel -d at h4
+    apply lt_of_le_of_ne
+    · addarith [h4]
+    · apply h3.symm
+  termination_by _ n d hd => 2 * n - d
 
 def T (n : ℤ) : ℤ :=
   if 0 < n then
@@ -119,12 +133,64 @@ def T (n : ℤ) : ℤ :=
 termination_by T n => 3 * n - 1
 
 theorem T_eq (n : ℤ) : T n = n ^ 2 := by
-  sorry
+  rw [T]
+  split_ifs with h1 h2 <;> push_neg at *
+  · calc T (1 - n) + 2 * n - 1
+      _ = (1 - n) ^ 2 + 2 * n - 1 := by rw [T_eq]
+      _ = n ^ 2 := by ring
+  · calc T (-n)
+      _ = (-n) ^ 2 := by rw [T_eq]
+      _ = n ^ 2 :=  by ring
+  · have h : n = 0 := le_antisymm h1 (by addarith [h2])
+    calc
+      0 = 0 ^ 2 := by numbers
+      _ = n ^ 2 := by rw [h]
+  termination_by _ n => 3 * n - 1
 
 theorem uniqueness (a b : ℤ) (h : 0 < b) {r s : ℤ}
     (hr : 0 ≤ r ∧ r < b ∧ a ≡ r [ZMOD b])
     (hs : 0 ≤ s ∧ s < b ∧ a ≡ s [ZMOD b]) : r = s := by
-  sorry
+  obtain ⟨hr1, hr2, ⟨p, hp⟩⟩ := hr
+  obtain ⟨hs1, hs2, ⟨q, hq⟩⟩ := hs
+  obtain ⟨k, hk⟩ : b ∣ r - s
+  · use q - p
+    calc r - s
+      _ = a - b * p - (a - b * q) := by addarith [hp, hq]
+      _ = b * (q - p) := by ring
+  have hrs1 :=
+    calc b * k
+      _ = r - s := by rw [hk]
+      _ < b - s := by addarith [hr2]
+      _ ≤ b - s + s := by extra
+      _ = b * 1 := by ring
+  have hrs2 :=
+    calc b * -1
+      _ = -b := by ring
+      _ < -s := by addarith [hs2]
+      _ ≤ r - s := by extra
+      _ = b * k := hk
+  cancel b at hrs1
+  cancel b at hrs2
+  interval_cases k
+  calc
+    r = r - s + s := by ring
+    _ = b * 0 + s := by rw [hk]
+    _ = s := by ring
 
 example (a b : ℤ) (h : 0 < b) : ∃! r : ℤ, 0 ≤ r ∧ r < b ∧ a ≡ r [ZMOD b] := by
-  sorry
+  use fmod a b
+  constructor
+  · constructor
+    · apply fmod_nonneg_of_pos _ h
+    constructor
+    · apply fmod_lt_of_pos _ h
+    · use fdiv a b
+      addarith [fmod_add_fdiv _ _]
+  · intro r hr
+    apply uniqueness a b h hr
+    constructor
+    · apply fmod_nonneg_of_pos _ h
+    constructor
+    · apply fmod_lt_of_pos _ h
+    · use fdiv a b
+      addarith [fmod_add_fdiv _ _]
