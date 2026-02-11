@@ -9,9 +9,9 @@ math2001_init
 @[decreasing] theorem irrat_aux_wf (b k : ℕ) (hb : k ≠ 0) (hab : b ^ 2 = 2 * k ^ 2) :
     k < b := by
   have h :=
-  calc k ^ 2 < k ^ 2 + k ^ 2 := by extra
-    _ = 2 * k ^ 2 := by ring
-    _ = b ^ 2 := by rw [hab]
+    calc k ^ 2 < k ^ 2 + k ^ 2 := by extra
+      _ = 2 * k ^ 2 := by ring
+      _ = b ^ 2 := by rw [hab]
   cancel 2 at h
 
 
@@ -33,8 +33,7 @@ theorem irrat_aux (a b : ℕ) (hb : b ≠ 0) : a ^ 2 ≠ 2 * b ^ 2 := by
       _ = k * (2 * k) := by ring
   cancel 2 * k at hk'
   have hk'' : k ≠ 0 := ne_of_gt hk'
-  have IH := irrat_aux b k -- inductive hypothesis
-  have : b ^ 2 ≠ 2 * k ^ 2 := IH hk''
+  have : b ^ 2 ≠ 2 * k ^ 2 := irrat_aux b k hk'' -- inductive hypothesis
   contradiction
 termination_by _ => b
 
@@ -54,12 +53,12 @@ example : ¬ ∃ a b : ℤ, b ≠ 0 ∧ a ^ 2 = 2 * b ^ 2 := by
   obtain ⟨x, y, h⟩ := bezout b a
   set d := gcd b a
   have key :=
-  calc (2 * k * y + l * x) ^ 2 * d ^ 2
-      = (2 * (d * k) * y + (d * l) * x) ^ 2 := by ring
-    _ = (2 * b * y + a * x) ^ 2 := by rw [hk, hl]
-    _ = 2 * (x * b + y * a) ^ 2 + (x ^ 2 - 2 * y ^ 2) * (a ^ 2 - 2 * b ^ 2) := by ring
-    _ = 2 * d ^ 2 + (x ^ 2 - 2 * y ^ 2) * (a ^ 2 - a ^ 2) := by rw [h, hab]
-    _ = 2 * d ^ 2 := by ring
+    calc (2 * k * y + l * x) ^ 2 * d ^ 2
+        = (2 * (d * k) * y + (d * l) * x) ^ 2 := by ring
+      _ = (2 * b * y + a * x) ^ 2 := by rw [hk, hl]
+      _ = 2 * (x * b + y * a) ^ 2 + (x ^ 2 - 2 * y ^ 2) * (a ^ 2 - 2 * b ^ 2) := by ring
+      _ = 2 * d ^ 2 + (x ^ 2 - 2 * y ^ 2) * (a ^ 2 - a ^ 2) := by rw [h, hab]
+      _ = 2 * d ^ 2 := by ring
   have hd : d ≠ 0
   · intro hd
     have :=
