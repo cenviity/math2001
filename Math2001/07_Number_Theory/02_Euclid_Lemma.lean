@@ -48,5 +48,4 @@ theorem euclid_lemma_pow (a k p : ℕ) (hp : Prime p) (hk : 1 ≤ k) (H : p ∣ 
   rw [ha] at H
   obtain h1 | h2 : p ∣ a ∨ p ∣ a ^ t := euclid_lemma hp H
   · apply h1
-  · apply IH
-    apply h2
+  · apply IH h2
