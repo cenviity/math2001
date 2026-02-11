@@ -168,28 +168,75 @@ example : Injective (fun (x:ℝ) ↦ x ^ 3) := by
 
 
 example : Injective (fun (x : ℚ) ↦ x - 12) ∨ ¬Injective (fun (x : ℚ) ↦ x - 12) := by
-  sorry
+  left
+  intro x y h
+  dsimp at h
+  addarith [h]
 
 example : Injective (fun (x : ℝ) ↦ 3) ∨ ¬ Injective (fun (x : ℝ) ↦ 3) := by
-  sorry
+  right
+  dsimp [Injective]
+  push_neg
+  use 0, 1
+  constructor <;> numbers
 
 example : Injective (fun (x : ℚ) ↦ 3 * x - 1) ∨ ¬ Injective (fun (x : ℚ) ↦ 3 * x - 1) := by
-  sorry
+  left
+  dsimp [Injective]
+  intro x y h
+  have h : 3 * x = 3 * y := by addarith [h]
+  cancel 3 at h
 
 
 example : Injective (fun (x : ℤ) ↦ 3 * x - 1) ∨ ¬ Injective (fun (x : ℤ) ↦ 3 * x - 1) := by
-  sorry
+  left
+  dsimp [Injective]
+  intro x y h
+  have h : 3 * x = 3 * y := by addarith [h]
+  cancel 3 at h
 
 
 example : Surjective (fun (x : ℝ) ↦ 2 * x) ∨ ¬ Surjective (fun (x : ℝ) ↦ 2 * x) := by
-  sorry
+  left
+  dsimp [Surjective]
+  intro x
+  use x / 2
+  ring
 
 
 example : Surjective (fun (x : ℤ) ↦ 2 * x) ∨ ¬ Surjective (fun (x : ℤ) ↦ 2 * x) := by
-  sorry
+  right
+  dsimp [Surjective]
+  push_neg
+  use 1
+  intro x
+  by_cases hx : x ≤ 0
+  · apply ne_of_lt
+    calc 2 * x
+      _ ≤ 2 * 0 := by rel [hx]
+      _ < 1 := by numbers
+  · apply ne_of_gt
+    have hx : 1 ≤ x := by addarith [hx]
+    calc 2 * x
+      _ ≥ 2 * 1 := by rel [hx]
+      _ > 1 := by numbers
 
 example : Surjective (fun (n : ℕ) ↦ n ^ 2) ∨ ¬ Surjective (fun (n : ℕ) ↦ n ^ 2) := by
-  sorry
+  right
+  dsimp [Surjective]
+  push_neg
+  use 2
+  intro x
+  by_cases hx : x ≤ 1
+  · apply ne_of_lt
+    calc x ^ 2
+      _ ≤ 1 ^ 2 := by rel [hx]
+      _ < 2 := by numbers
+  · apply ne_of_gt
+    have hx : 2 ≤ x := by addarith [hx]
+    calc x ^ 2
+      _ ≥ 2 ^ 2 := by rel [hx]
+      _ > 2 := by numbers
 
 inductive White
   | meg
@@ -204,10 +251,23 @@ def h : Musketeer → White
   | aramis => jack
 
 example : Injective h ∨ ¬ Injective h := by
-  sorry
+  right
+  dsimp [Injective]
+  push_neg
+  use athos, aramis
+  trivial
 
 example : Surjective h ∨ ¬ Surjective h := by
-  sorry
+  left
+  dsimp [Surjective]
+  intro x
+  cases x with
+  | meg =>
+    use porthos
+    trivial
+  | jack =>
+    use athos
+    trivial
 
 
 def l : White → Musketeer
@@ -215,34 +275,107 @@ def l : White → Musketeer
   | jack => porthos
 
 example : Injective l ∨ ¬ Injective l := by
-  sorry
+  left
+  dsimp [Injective]
+  intro x y h
+  cases x <;> cases y <;> trivial
 
 
 example : Surjective l ∨ ¬ Surjective l := by
-  sorry
+  right
+  dsimp [Surjective]
+  push_neg
+  use athos
+  intro x
+  cases x <;> trivial
 
 example (f : X → Y) : Injective f ↔ ∀ x1 x2 : X, x1 ≠ x2 → f x1 ≠ f x2 := by
-  sorry
+  constructor
+  · intro h x1 x2 hx hfx
+    have : x1 = x2 := h hfx
+    contradiction
+  · intro h x1 x2 hxfx
+    by_cases hx : x1 = x2
+    · apply hx
+    · have : f x1 ≠ f x2 := h x1 x2 hx
+      contradiction
 
 example : (∀ (f : ℚ → ℚ), Injective f → Injective (fun x ↦ f x + 1))
     ∨ ¬ ∀ (f : ℚ → ℚ), Injective f → Injective (fun x ↦ f x + 1) := by
-  sorry
+  left
+  intro f hf x1 x2 hfx
+  dsimp at hfx
+  have hfx : f x1 = f x2 := by addarith [hfx]
+  apply hf hfx
 
 
 example : (∀ (f : ℚ → ℚ), Injective f → Injective (fun x ↦ f x + x))
     ∨ ¬ ∀ (f : ℚ → ℚ), Injective f → Injective (fun x ↦ f x + x) := by
-  sorry
+  right
+  push_neg
+  use fun x ↦ -x
+  constructor
+  · intro x y h
+    dsimp at h
+    addarith [h]
+  · dsimp [Injective]
+    push_neg
+    use 0, 1
+    trivial
 
 example : (∀ (f : ℤ → ℤ), Surjective f → Surjective (fun x ↦ 2 * f x))
     ∨ ¬ ∀ (f : ℤ → ℤ), Surjective f → Surjective (fun x ↦ 2 * f x) := by
-  sorry
+  right
+  push_neg
+  use fun x ↦ x
+  dsimp [Surjective]
+  constructor
+  · intro x
+    use x
+    rfl
+  · push_neg
+    use 1
+    intro x
+    by_cases hx : x ≤ 0
+    · apply ne_of_lt
+      calc 2 * x
+        _ ≤ 2 * 0 := by rel [hx]
+        _ < 1 := by numbers
+    · apply ne_of_gt
+      have hx : 1 ≤ x := by addarith [hx]
+      calc 2 * x
+        _ ≥ 2 * 1 := by rel [hx]
+        _ > 1 := by numbers
 
 example : (∀ c : ℝ, Surjective (fun x ↦ c * x)) ∨ ¬ ∀ c : ℝ, Surjective (fun x ↦ c * x) := by
-  sorry
+  right
+  dsimp [Surjective]
+  push_neg
+  use 0, 1
+  intro a
+  apply ne_of_lt
+  calc 0 * a
+    _ = 0 := by ring
+    _ < 1 := by numbers
 
 example {f : ℚ → ℚ} (hf : ∀ x y, x < y → f x < f y) : Injective f := by
-  sorry
+  intro x y hfxy
+  obtain hxy | hxy | hxy := lt_trichotomy x y
+  · have : f x ≠ f y := ne_of_lt (hf x y hxy)
+    contradiction
+  · apply hxy
+  · have : f x ≠ f y := ne_of_gt (hf y x hxy)
+    contradiction
 
 example {f : X → ℕ} {x0 : X} (h0 : f x0 = 0) {i : X → X}
     (hi : ∀ x, f (i x) = f x + 1) : Surjective f := by
-  sorry
+  dsimp [Surjective]
+  intro b
+  simple_induction b with k IH
+  · use x0
+    apply h0
+  · obtain ⟨a, hfa⟩ := IH
+    use i a
+    calc f (i a)
+      _ = f a + 1 := hi a
+      _ = k + 1 := by rw [hfa]
