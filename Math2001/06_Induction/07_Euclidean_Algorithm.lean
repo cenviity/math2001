@@ -68,28 +68,52 @@ theorem gcd_dvd (a b : ℤ) : gcd a b ∣ b ∧ gcd a b ∣ a := by
     obtain ⟨IH_right, IH_left⟩ : _ ∧ _ := gcd_dvd b (fmod a b) -- inductive hypothesis
     constructor
     · -- prove that `gcd a b ∣ b`
-      sorry
+      apply IH_left
     · -- prove that `gcd a b ∣ a`
-      sorry
+      obtain ⟨k, hk⟩ := IH_left
+      obtain ⟨l, hl⟩ := IH_right
+      set q := fdiv a b
+      set r := fmod a b
+      use l + k * q
+      calc
+        a = r + b * q := by rw [fmod_add_fdiv]
+        _ = gcd b r * l + gcd b r * k * q := by rw [← hk, ← hl]
+        _ = gcd b r * (l + k * q) := by ring
   · -- case `b < 0`
     obtain ⟨IH_right, IH_left⟩ : _ ∧ _ := gcd_dvd b (fmod a (-b)) -- inductive hypothesis
     constructor
     · -- prove that `gcd a b ∣ b`
-      sorry
+      apply IH_left
     · -- prove that `gcd a b ∣ a`
-      sorry
+      obtain ⟨k, hk⟩ := IH_left
+      obtain ⟨l, hl⟩ := IH_right
+      set q := fdiv a (-b)
+      set r := fmod a (-b)
+      use l - k * q
+      calc
+        a = r + -b * q := by rw [fmod_add_fdiv]
+        _ = gcd b r * l + -(gcd b r * k) * q := by rw [← hl, ← hk]
+        _ = gcd b r * (l - k * q) := by ring
   · -- case `b = 0`, `0 ≤ a`
     constructor
     · -- prove that `gcd a b ∣ b`
-      sorry
+      use 0
+      calc
+        b = 0 := le_antisymm h1 h2
+        _ = a * 0 := by ring
     · -- prove that `gcd a b ∣ a`
-      sorry
+      use 1
+      ring
   · -- case `b = 0`, `a < 0`
     constructor
     · -- prove that `gcd a b ∣ b`
-      sorry
+      use 0
+      calc
+        b = 0 := le_antisymm h1 h2
+        _ = -a * 0 := by ring
     · -- prove that `gcd a b ∣ a`
-      sorry
+      use -1
+      ring
 termination_by gcd_dvd a b => b
 
 
@@ -215,4 +239,11 @@ theorem bezout (a b : ℤ) : ∃ x y : ℤ, x * a + y * b = gcd a b := by
 
 
 theorem gcd_maximal {d a b : ℤ} (ha : d ∣ a) (hb : d ∣ b) : d ∣ gcd a b := by
-  sorry
+  obtain ⟨p, hp⟩ := ha
+  obtain ⟨q, hq⟩ := hb
+  obtain ⟨x, y, h⟩ := bezout a b
+  use x * p + y * q
+  calc gcd a b
+    _ = x * a + y * b := by rw [h]
+    _ = x * (d * p) + y * (d * q) := by rw [hp, hq]
+    _ = d * (x * p + y * q) := by ring
