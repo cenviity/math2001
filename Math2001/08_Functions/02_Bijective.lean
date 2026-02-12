@@ -1,7 +1,6 @@
 /- Copyright (c) Heather Macbeth, 2023.  All rights reserved. -/
 import Mathlib.Data.Real.Basic
 import Library.Basic
-import Library.Tactic.Exhaust
 
 math2001_init
 
@@ -70,7 +69,7 @@ example : ¬ Bijective f := by
   push_neg
   use neutron
   intro x
-  cases x <;> exhaust
+  cases x <;> trivial
 
 
 example {f : X → Y} : Bijective f ↔ ∀ y, ∃! x, f x = y := by
