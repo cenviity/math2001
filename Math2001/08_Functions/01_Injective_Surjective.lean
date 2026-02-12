@@ -1,7 +1,6 @@
 /- Copyright (c) Heather Macbeth, 2023.  All rights reserved. -/
 import Mathlib.Data.Real.Basic
 import Library.Basic
-import Library.Tactic.Exhaust
 import Library.Tactic.ModEq
 import Library.Theory.ParityModular
 
@@ -88,7 +87,7 @@ example : ¬ Injective f := by
   push_neg
   use athos, porthos
   dsimp [f] -- optional
-  exhaust
+  trivial
 
 
 example : ¬ Surjective f := by
@@ -97,9 +96,9 @@ example : ¬ Surjective f := by
   use porthos
   intro a
   cases a
-  · exhaust
-  · exhaust
-  · exhaust
+  · trivial
+  · trivial
+  · trivial
 
 
 -- better (more automated) version of the previous proof
@@ -108,7 +107,7 @@ example : ¬ Surjective f := by
   push_neg
   use porthos
   intro a
-  cases a <;> exhaust
+  cases a <;> trivial
 
 
 def g : Musketeer → Musketeer
@@ -120,7 +119,7 @@ def g : Musketeer → Musketeer
 example : Injective g := by
   dsimp [Injective]
   intro x1 x2 hx
-  cases x1 <;> cases x2 <;> exhaust
+  cases x1 <;> cases x2 <;> trivial
 
 
 example : Surjective g := by
@@ -128,11 +127,11 @@ example : Surjective g := by
   intro y
   cases y
   · use aramis
-    exhaust
+    trivial
   · use athos
-    exhaust
+    trivial
   · use porthos
-    exhaust
+    trivial
 
 
 
