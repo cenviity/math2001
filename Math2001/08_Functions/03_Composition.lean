@@ -1,7 +1,6 @@
 /- Copyright (c) Heather Macbeth, 2023.  All rights reserved. -/
 import Mathlib.Data.Real.Basic
 import Library.Basic
-import Library.Tactic.Exhaust
 
 math2001_init
 set_option pp.funBinderTypes true
@@ -58,9 +57,9 @@ def q : Humour → Humour
 example : Inverse p q := by
   constructor
   · ext x
-    cases x <;> exhaust
+    cases x <;> rfl
   · ext x
-    cases x <;> exhaust
+    cases x <;> rfl
 
 
 theorem exists_inverse_of_bijective {f : X → Y} (hf : Bijective f) :
@@ -138,7 +137,7 @@ def c : Humour → Humour
 
 example : b ∘ a = c := by
   ext x
-  cases x <;> exhaust
+  cases x <;> rfl
 
 
 def u (x : ℝ) : ℝ := 5 * x + 1
